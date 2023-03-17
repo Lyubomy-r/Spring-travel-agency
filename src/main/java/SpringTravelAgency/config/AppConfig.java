@@ -10,7 +10,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("SpringTravelAgency")
+@ComponentScan(basePackages="SpringTravelAgency")
 public class AppConfig {
 
     @Bean
@@ -20,6 +20,7 @@ public class AppConfig {
 
         viewResolver.setPrefix("/WEB-INF/view/");
         viewResolver.setSuffix(".jsp");
+
         return viewResolver;
     }
 
