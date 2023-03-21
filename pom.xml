@@ -2,92 +2,97 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.example</groupId>
-  <artifactId>Spring-travel-agency</artifactId>
+  <artifactId>Javax-Sp</artifactId>
   <packaging>war</packaging>
-  <version>1.0</version>
-  <name>Spring-travel-agency-Webapp</name>
-
+  <version>1.0-SNAPSHOT</version>
+  <name>Javax-Sp Maven Webapp</name>
+  <url>http://maven.apache.org</url>
 
   <properties>
+    <springframework.version>5.3.9</springframework.version>
+    <hibernate.version>5.4.1.Final</hibernate.version>
+    <mysql.connector.version>8.0.29</mysql.connector.version>
+    <c3po.version>0.9.5.2</c3po.version>
+    <springsecurity.version>5.3.7.RELEASE</springsecurity.version>
+
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
-
   <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
     <!-- Spring -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
-      <version>6.0.6</version>
+      <version>${springframework.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-tx</artifactId>
-      <version>6.0.6</version>
+      <version>${springframework.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
-      <version>6.0.6</version>
+      <version>${springframework.version}</version>
     </dependency>
 
-    <!--Sspring Security-->
-  <!--  <dependency>
+    <!-- Add Jackson for JSON converters -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.9.5</version>
+    </dependency>
+
+    <!--Spring Security-->
+    <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-web</artifactId>
-      <version>6.0.1</version>
+      <version>${springsecurity.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-config</artifactId>
-      <version>6.0.1</version>
+      <version>${springsecurity.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-taglibs</artifactId>
-      <version>6.0.1</version>
-    </dependency> -->
+      <version>${springsecurity.version}</version>
+    </dependency>
 
     <!-- Hibernate -->
     <dependency>
-      <groupId>org.hibernate.orm</groupId>
+      <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>6.1.7.Final</version>
+      <version>${hibernate.version}</version>
     </dependency>
 
     <!-- MySQL -->
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.28</version>
+      <version>${mysql.connector.version}</version>
     </dependency>
 
     <!-- C3PO -->
     <dependency>
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
-      <version>0.9.5.2</version>
+      <version>${c3po.version}</version>
     </dependency>
 
     <!-- Servlet+JSP+JSTL -->
     <dependency>
-      <groupId>jakarta.servlet</groupId>
-      <artifactId>jakarta.servlet-api</artifactId>
-      <version>6.0.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>jakarta.servlet.jsp</groupId>
-      <artifactId>jakarta.servlet.jsp-api</artifactId>
-      <version>3.1.0</version>
-    </dependency>
-
-        <!-- javax servlet -->
-  <!--  <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>3.1.0</version>
@@ -98,7 +103,6 @@
       <artifactId>javax.servlet.jsp-api</artifactId>
       <version>2.3.1</version>
     </dependency>
-    -->
 
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -107,23 +111,29 @@
     </dependency>
 
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>2.3.0</version>
     </dependency>
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+
   </dependencies>
 
+
   <build>
-    <finalName>Spring-travel-agency</finalName>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.2.0</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
+    <finalName>Javax-Sp</finalName>
+    <plugins>
+      <plugin>
+        <!-- Add Maven coordinates (GAV) for: maven-war-plugin -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.2.0</version>
+      </plugin>
+
+    </plugins>
   </build>
 </project>

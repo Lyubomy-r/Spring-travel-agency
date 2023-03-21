@@ -1,6 +1,6 @@
 package SpringTravelAgency.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.util.Date;
 
@@ -21,6 +21,10 @@ public class Order {
     @ManyToOne
     @JoinColumn(name="room_id")
     private Room room;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
 
     public Long getOrderId() {
