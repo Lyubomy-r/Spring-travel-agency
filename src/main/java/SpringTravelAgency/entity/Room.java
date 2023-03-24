@@ -11,12 +11,12 @@ import java.util.List;
 public class Room {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="room_id")
     private Long roomId;
 
     @Column(name="number_room")
-    private String numberRoom;
+    private Integer numberRoom;
 
     @Column(name="type")
     private String type;
@@ -31,6 +31,21 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private List<Order> orderList;
 
+
+    public void addOrderToRoom(Order theOrder){
+        this.orderList.add(theOrder);
+        theOrder.setRoom(this);
+    }
+
+    public void addHotelToRoom(Hotel theHotel){
+        this.hotel=theHotel;
+        theHotel.getRooms().add(this);
+    }
+
+
+    public Room() {
+    }
+
     public Long getRoomId(){
         return this.roomId;
     }
@@ -39,16 +54,16 @@ public class Room {
         this.roomId=theRoomId;
     }
 
-    public String getNumberRoom(){
+    public Integer getNumberRoom(){
         return this.numberRoom;
     }
 
-    public void setNumberRoom(String theNumberRoom){
+    public void setNumberRoom(Integer theNumberRoom){
         this.numberRoom=theNumberRoom;
     }
 
-    public Double getType(){
-        return this.price;
+    public String getType(){
+        return this.type;
     }
 
     public void setPrice(Double thePrice){
@@ -69,6 +84,14 @@ public class Room {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+    }
+
+    public List<Order> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
     }
 
     @Override

@@ -17,7 +17,7 @@
 
 <div id="wrapper">
     <div id="header">
-        <h2>CRM - Customer Relationship Manager</h2>
+        <h2>We have free room for you</h2>
     </div>
 </div>
 
@@ -31,25 +31,21 @@
 
         <table>
             <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
+                <th>Name Hotel</th>
+                <th>Number Room</th>
                 <th>Type Room</th>
                 <th>Price Room</th>
                 <th>Action</th>
             </tr>
 
             <!-- loop over and print our customers -->
-            <c:forEach var="tempCustomer" items="${customers}">
 
-
-
-
-
+                    <c:forEach var="tempCustomer" items="${customers}">
                 <tr>
-                    <td> ${tempCustomer.nameHotel} </td>
-                    <td> ${tempCustomer.city} </td>
-                    <td> ${tempCustomer.country} </td>
+                    <td> ${tempCustomer.hotel.nameHotel} </td>
+                    <td> ${tempCustomer.numberRoom} </td>
+                    <td> ${tempCustomer.type} </td>
+                    <td> ${tempCustomer.price} </td>
 
 
 
@@ -57,7 +53,7 @@
 
                 </tr>
 
-            </c:forEach>
+                    </c:forEach>
 
         </table>
 

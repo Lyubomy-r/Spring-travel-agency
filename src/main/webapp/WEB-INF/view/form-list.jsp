@@ -34,6 +34,8 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
+                <th>Type Room</th>
+                <th>Price Room</th>
                 <th>Action</th>
             </tr>
 
@@ -48,6 +50,8 @@
                     <td> ${tempCustomer.nameHotel} </td>
                     <td> ${tempCustomer.city} </td>
                     <td> ${tempCustomer.country} </td>
+
+
 
 
 

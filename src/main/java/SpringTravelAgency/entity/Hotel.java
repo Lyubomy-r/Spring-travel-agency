@@ -9,20 +9,23 @@ import java.util.List;
 public class Hotel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="hotel_id")
     private Long hotelId;
 
     @Column(name="name_hotel")
     private String nameHotel;
 
+
+    @Column(name="description")
+    private String description;
     @Column(name="country")
     private String country;
 
     @Column(name="city")
     private String city;
 
-    @OneToMany(cascade =CascadeType.ALL, mappedBy = "hotel")
+    @OneToMany(cascade =CascadeType.ALL,fetch =FetchType.EAGER, mappedBy = "hotel")
     List<Room> rooms;
 
     public Long getHotelId(){
@@ -63,6 +66,14 @@ public class Hotel {
 
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

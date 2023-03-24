@@ -2,21 +2,22 @@ package SpringTravelAgency.entity;
 
 import javax.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @Table(name="Order")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="order_id")
     private Long orderId;
 
     @Column(name="date_of_arrive")
-    private Date dateOfArrive;
+    private LocalDate dateOfArrive;
 
     @Column(name="departure_date")
-    private Date departureDate;
+    private LocalDate departureDate;
 
     @ManyToOne
     @JoinColumn(name="room_id")
@@ -27,15 +28,25 @@ public class Order {
     private User user;
 
 
+    public void addOrderToRoom(Room  theRoom){
+        this.room=theRoom;
+        theRoom.getOrderList().add(this);
+
+    }
+
+    public void addUserToOrder(User thUser){
+        this.user=thUser;
+        thUser.getOrderList().add(this);
+    }
     public Long getOrderId() {
         return orderId;
     }
 
-    public Date getDateOfArrive() {
+    public LocalDate getDateOfArrive() {
         return dateOfArrive;
     }
 
-    public Date getDepartureDate() {
+    public LocalDate getDepartureDate() {
         return departureDate;
     }
 
@@ -47,11 +58,11 @@ public class Order {
         this.orderId = conditionId;
     }
 
-    public void setDateOfArrive(Date dateOfArrive) {
+    public void setDateOfArrive(LocalDate dateOfArrive) {
         this.dateOfArrive = dateOfArrive;
     }
 
-    public void setDepartureDate(Date departureDate) {
+    public void setDepartureDate(LocalDate departureDate) {
         this.departureDate = departureDate;
     }
 
