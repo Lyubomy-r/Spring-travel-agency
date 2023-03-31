@@ -25,8 +25,29 @@ public class Hotel {
     @Column(name="city")
     private String city;
 
-    @OneToMany(cascade =CascadeType.ALL,fetch =FetchType.EAGER, mappedBy = "hotel")
-    List<Room> rooms;
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "hotel")
+    private List<Room> rooms;
+
+    @OneToMany(cascade=CascadeType.ALL, mappedBy= "hotel")
+    private  List<Order> orderList;
+
+    public void addOrdersToHotel(Order theOrder){
+        this.orderList.add(theOrder);
+        theOrder.setHotel(this);
+    }
+
+    public void addOrdersToHotel(Room theRoom){
+        this.rooms.add(theRoom);
+        theRoom.setHotel(this);
+    }
+
+    public List<Order> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
+    }
 
     public Long getHotelId(){
         return this.hotelId;

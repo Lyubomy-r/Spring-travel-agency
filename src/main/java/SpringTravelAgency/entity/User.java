@@ -26,8 +26,9 @@ public class User {
     @Column(name="password")
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "user")
     private List<Order> orderList;
+
 
     public Long getUserId() {
         return userId;
@@ -52,6 +53,9 @@ public class User {
     public List<Order> getOrderList() {
         return orderList;
     }
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
+    }
 
     public void setUserId(Long userId) {
         this.userId = userId;
@@ -73,9 +77,7 @@ public class User {
         this.password = password;
     }
 
-    public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
-    }
+
 
     @Override
     public String toString() {

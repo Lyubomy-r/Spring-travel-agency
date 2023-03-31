@@ -1,83 +1,60 @@
 package SpringTravelAgency.dao;
 
-import SpringTravelAgency.entity.Hotel;
-import SpringTravelAgency.entity.Order;
-import SpringTravelAgency.entity.Room;
 
+import SpringTravelAgency.entity.Order;
 
 import javax.persistence.Query;
 import javax.transaction.Transactional;
-
-import SpringTravelAgency.entity.User;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Repository
 @Transactional
-public class OrderImp implements OrderInterface{
+public class OrderImp implements OrderDAO{
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public List<Hotel> getRooms() {
+    public Order findOrderById(Long theId){
+        Order order = entityManager.find(Order.class, theId);
+        return order;
+    }
 
-        Query hotelQueue2= entityManager.createQuery("Select e from Hotel e");
-        List <Hotel> findHotel = hotelQueue2.getResultList();
-
-        return findHotel;
-        }
     @Override
-    public Hotel getHotel(Long theId) {
-        Hotel findHotel=entityManager.find(Hotel.class,theId);
-        return findHotel;
+    public List<Order> getOrderList(){
+
+        Query queryGetOrders=entityManager.createQuery("SELECT o FROM Order o");
+        List<Order> allOrder= queryGetOrders.getResultList();
+
+        return allOrder;
     }
     @Override
-    public Room getRoom(Long theId) {
-        Room findRoom=entityManager.find(Room.class,theId);
+    public List<Order> getFreeRoomList(LocalDate localDate){
 
-        return findRoom;
-    }
-        @Override
-        public List<Room> freeRoomList(LocalDate searchDate){
+        Query queryGetOrders=entityManager.createQuery("SELECT DISTINCT o FROM Order o LEFT JOIN FETCH o.hotel  LEFT JOIN FETCH o.user  " +
+                "LEFT JOIN FETCH o.room where o.dateOfArrive<>:searchDate");
+        queryGetOrders.setParameter("searchDate",localDate);
+        List<Order> allOrder= queryGetOrders.getResultList();
 
-        Query queryGetDateArrive=entityManager.createQuery("SELECT r FROM Room r");
-            List<Room> allRoom= queryGetDateArrive.getResultList();
-
-            return allRoom;
-        }
-        @Override
-        public List<Room> RoomList(){
-
-        Query queryGetDateArrive=entityManager.createQuery("SELECT r FROM Room r");
-        List<Room> allRoom= queryGetDateArrive.getResultList();
-
-        return allRoom;
-    }
-    @Override
-    public void addRoom(Room theRoom){
-        entityManager.persist(theRoom);
-    }
-    @Override
-    public void addHotel(Hotel theHotel){
-        entityManager.persist(theHotel);
-    }
-    @Override
-    public void addUser(User theUser){
-        entityManager.persist(theUser);
+        return allOrder;
     }
     @Override
     public void addOrder(Order theOrder){
         entityManager.persist(theOrder);
     }
+    @Override
+    public void updateOrder(Order theOrder){
+        entityManager.merge(theOrder);
+    }
 
-
-
+    @Override
+    public void deleteOrderById(Long theOrder){
+        Order order=findOrderById(theOrder);
+        entityManager.remove(order);
+    }
 
 
 

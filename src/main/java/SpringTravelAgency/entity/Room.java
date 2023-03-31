@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import java.util.List;
 
+
 @Entity
 @Table(name="Room")
 public class Room {
@@ -28,8 +29,9 @@ public class Room {
     @JoinColumn(name="hotel_id")
     private Hotel hotel;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "room")
     private List<Order> orderList;
+
 
 
     public void addOrderToRoom(Order theOrder){
@@ -42,9 +44,6 @@ public class Room {
         theHotel.getRooms().add(this);
     }
 
-
-    public Room() {
-    }
 
     public Long getRoomId(){
         return this.roomId;

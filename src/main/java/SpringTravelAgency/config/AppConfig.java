@@ -2,6 +2,7 @@ package SpringTravelAgency.config;
 
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,16 +11,16 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
-
+import java.util.Properties;
 
 
 @Configuration
@@ -76,7 +77,7 @@ public class AppConfig  implements WebMvcConfigurer {
 
         String propVal = env.getProperty(propName);
 
-        // now convert to int
+
         int intPropVal = Integer.parseInt(propVal);
 
         return intPropVal;
@@ -91,11 +92,19 @@ public class AppConfig  implements WebMvcConfigurer {
                 .addResourceLocations("/resources/");
     }
 
+
+    Properties additionalProperties() {
+        Properties properties = new Properties();
+
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+
+        return properties;
+    }
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
 
         HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
-        adapter.setDatabase(Database.MYSQL);
+
         adapter.setShowSql(true);
         return adapter;
     }
@@ -106,6 +115,7 @@ public class AppConfig  implements WebMvcConfigurer {
         emf.setDataSource(myDataSource);
         emf.setJpaVendorAdapter(jpaVendorAdapter);
         emf.setPackagesToScan("SpringTravelAgency");
+        emf.setJpaProperties(additionalProperties());
         return emf;
     }
 
