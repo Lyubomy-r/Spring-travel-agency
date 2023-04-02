@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-@Transactional
+
 public class HotelImp implements HotelDAO{
 
     @PersistenceContext
@@ -26,8 +26,6 @@ public class HotelImp implements HotelDAO{
     @Override
     public List<Hotel> getHotelList() {
 
-        // Hotel findHotel = entityManager.find(Hotel.class, 1);
-        // Query hotelQueue= entityManager.createQuery("Select h from Hotel h where h.hotelId=1 ");
         Query hotelQueue2= entityManager.createQuery("Select e from Hotel e");
         List <Hotel> findHotel = hotelQueue2.getResultList();
 

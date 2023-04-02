@@ -1,6 +1,5 @@
 package SpringTravelAgency.dao;
 
-import SpringTravelAgency.entity.Hotel;
 import SpringTravelAgency.entity.User;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
@@ -12,7 +11,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-@Transactional
+
 public class UserImp implements UserDAO {
 
     @PersistenceContext
@@ -35,10 +34,20 @@ public class UserImp implements UserDAO {
     }
 
     @Override
-    public User getUserAllConnections(Long theId) {
+    public User getUserAllConnectionsById(Long theId) {
         Query query = entityManager.createQuery("SELECT DISTINCT u FROM User u LEFT join fetch u.orderList  WHERE u.userId=:theId")
                 .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false );
         query.setParameter("theId", theId);
+        User finUser= (User) query.getSingleResult();
+
+        return finUser;
+    }
+
+    @Override
+    public User getUserAllConnectionsByName(String nameUser) {
+        Query query = entityManager.createQuery("SELECT DISTINCT u FROM User u LEFT join fetch u.orderList  WHERE u.firstName=:nameUser")
+                .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false );
+        query.setParameter("nameUser", nameUser);
         User finUser= (User) query.getSingleResult();
 
         return finUser;

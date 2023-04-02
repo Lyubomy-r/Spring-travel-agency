@@ -1,12 +1,11 @@
-package SpringTravelAgency.dao;
+package SpringTravelAgency.service;
 
 import SpringTravelAgency.entity.Room;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface RoomDAO {
-
+public interface RoomService {
     public Room getRoomAllConnections(Long theId);
     public List<Room> getRoomListAllConnections();
     public Room findRoomById(Long theId);
@@ -17,5 +16,4 @@ public interface RoomDAO {
     public void updateRoom(Room theRoom);
 
     public void deleteRoomById(Long theRoom);
-
 }

@@ -7,12 +7,11 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-@Transactional
+
 public class RoomImp implements RoomDAO {
 
     @PersistenceContext
@@ -26,21 +25,19 @@ public class RoomImp implements RoomDAO {
     }
 
     @Override
-    public List<Room> freeRoomList(LocalDate searchDate){
+    public List<Room> freeRoomList(String theCountry, LocalDate arrivalDate,
+                                   LocalDate departureDate){
 
-        Query queryGetDateArrive=entityManager.createQuery("SELECT r FROM Room r");
+        Query queryGetDateArrive=entityManager.createQuery("SELECT r FROM Room r where r.hotel.country=:theCountry " +
+                "and r.roomId not in (" +
+                "SELECT O.room.roomId FROM Order O where :arrivalDate  BETWEEN O.dateOfArrive AND O.departureDate" +
+                " OR :departureDate BETWEEN O.dateOfArrive AND O.departureDate OR O.dateOfArrive Between :arrivalDate and :departureDate" +
+                " OR O.departureDate Between :arrivalDate and :departureDate)" );
+        queryGetDateArrive.setParameter("theCountry", theCountry);
+        queryGetDateArrive.setParameter("arrivalDate", arrivalDate);
+        queryGetDateArrive.setParameter("departureDate", departureDate);
+
         List<Room> allRoom= queryGetDateArrive.getResultList();
-//            List<Room> orderList = allRoom.stream().map(a->{
-//                                                            for(int i=0;i<a.getOrderList().size();i++){
-//                                                                if(!(searchDate.equals(a.getOrderList().get(i).getDateOfArrive()))){
-//                                                                    return a;
-//                                                                }else{
-//                                                                    a=null;
-//                                                                    return a;
-//                                                                }
-//
-//                                                            }
-//                                                                 return a; }).toList();
 
         return allRoom;
     }
