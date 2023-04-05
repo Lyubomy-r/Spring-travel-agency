@@ -1,6 +1,6 @@
 package SpringTravelAgency.service;
 
-import SpringTravelAgency.dao.UserService;
+import SpringTravelAgency.dao.UserDAO;
 import SpringTravelAgency.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,39 +12,39 @@ import java.util.List;
 @Transactional
 public class UserServiceImp implements UserService {
 
-    private UserService userService;
+    private UserDAO userDAO;
 
     @Autowired
-    public UserServiceImp (UserService userService){
-        this.userService = userService;
+    public UserServiceImp (UserDAO userDAO){
+        this.userDAO = userDAO;
     }
     @Override
     public User getUserAllConnectionsById(Long theId){
-        return userService.getUserAllConnectionsById(theId);
+        return userDAO.getUserAllConnectionsById(theId);
     }
     @Override
     public User getUserAllConnectionsByName(String nameUred){
-        return userService.getUserAllConnectionsByName(nameUred);
+        return userDAO.getUserAllConnectionsByName(nameUred);
     }
     @Override
     public User findUserById(Long theId){
-        return userService.findUserById(theId);
+        return userDAO.findUserById(theId);
     }
     @Override
     public List<User> getUserList(){
-        return userService.getUserList();
+        return userDAO.getUserList();
     }
     @Override
     public void addUser(User theUser){
-        userService.addUser(theUser);
+        userDAO.addUser(theUser);
     }
     @Override
     public void updateUser(User theUser){
-        userService.updateUser(theUser);
+        userDAO.updateUser(theUser);
     }
     @Override
     public void deleteUserById(Long theUser){
-        userService.deleteUserById(theUser);
+        userDAO.deleteUserById(theUser);
     }
 
 

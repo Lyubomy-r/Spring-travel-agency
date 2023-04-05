@@ -21,16 +21,21 @@ public class HotelServiceImp implements HotelService {
 
     @Override
     public Hotel getHotelAllConnections(Long theId){
-        return hotelDAO.getHotelAllConnections(theId);
+        return hotelDAO.getHotelAllConnectionsById(theId);
     }
     @Override
     public List<Hotel> getHotelList(){
-      return  hotelDAO.getHotelList();
+        return  hotelDAO.getHotelList();
     }
 
     @Override
     public Hotel findHotelById(Long theId){
         return hotelDAO.findHotelById(theId);
+    }
+
+    @Override
+    public Hotel findHotelByName(String hotelName){
+        return hotelDAO.findHotelByName(hotelName);
     }
     @Override
     public void addHotel(Hotel theHotel){

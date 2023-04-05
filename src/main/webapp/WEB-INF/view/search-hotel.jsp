@@ -30,9 +30,9 @@
                 <td><label>Country:</label></td>
                 <select  name="searchCountry">
                     <c:forEach var="temphotelList" items="${hotelList}">
-                   <option value="${temphotelList.country}" label="${temphotelList.country}"/>
+                        <option value="${temphotelList.country}" label="${temphotelList.country}"/>
                     </c:forEach>
-<%--                    <form:options items="${hotelList}"/>--%>
+
                 </select>
 
             </tr>
@@ -58,7 +58,7 @@
     </form:form>
 </div>
 
-<div style="clear; both;"></div>
+
 
 <p>
     <a href="${pageContext.request.contextPath}/api/showFormSearch">Back to List</a>

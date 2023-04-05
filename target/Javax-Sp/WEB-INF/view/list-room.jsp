@@ -43,17 +43,17 @@
 <%--            <form:hidden path="id" >--%>
 <%--                        <security:authentication property="principal.username"/>--%>
 <%--            </form:hidden>--%>
-                    <c:forEach var="tempCustomer" items="${customers}">
+                    <c:forEach var="tempRoom" items="${modelRooms}">
 
                         <c:url var="reservedRoom" value="/api/addOrder">
-                            <c:param name="roomId" value="${tempCustomer.roomId}"/>
+                            <c:param name="roomId" value="${tempRoom.roomId}"/>
                         </c:url>
 
                 <tr>
-                    <td> ${tempCustomer.hotel.nameHotel} </td>
-                    <td> ${tempCustomer.numberRoom} </td>
-                    <td> ${tempCustomer.type} </td>
-                    <td> ${tempCustomer.price} </td>
+                    <td> ${tempRoom.hotel.nameHotel} </td>
+                    <td> ${tempRoom.numberRoom} </td>
+                    <td> ${tempRoom.type} </td>
+                    <td> ${tempRoom.price} </td>
                     <td><a href="${reservedRoom}">Reserved Room</a></td>
 
 
@@ -69,6 +69,7 @@
 
 </div>
 <div>
+    <hr>
     <a href="${pageContext.request.contextPath}/api/showFormSearch">Back to Search Page</a>
 </div>
 

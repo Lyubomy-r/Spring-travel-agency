@@ -10,6 +10,7 @@ public interface OrderService {
     public List<Order> getOrderList();
     public List<Order> getFreeRoomList(LocalDate localDate);
     public Order findOrderById(Long theId);
+    public List<Order> getAllUserOrders(Long userId);
     public void addOrder(Order theOrder);
     public void updateOrder(Order theOrder);
     public void deleteOrderById(Long theOrder);

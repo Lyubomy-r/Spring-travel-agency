@@ -1,6 +1,6 @@
 package SpringTravelAgency.service;
 
-import SpringTravelAgency.dao.OrderService;
+import SpringTravelAgency.dao.OrderDAO;
 import SpringTravelAgency.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +13,9 @@ import java.util.List;
 @Transactional
 public class OrderServiceImp implements OrderService {
 
-    private OrderService orderService;
+    private OrderDAO orderService;
     @Autowired
-    public OrderServiceImp(OrderService orderService){
+    public OrderServiceImp(OrderDAO orderService){
         this.orderService = orderService;
     }
     @Override
@@ -29,6 +29,10 @@ public class OrderServiceImp implements OrderService {
     @Override
     public Order findOrderById(Long theId){
         return orderService.findOrderById(theId);
+    }
+    @Override
+    public List<Order> getAllUserOrders(Long userId){
+        return orderService.getAllUserOrders(userId);
     }
     @Override
     public void addOrder(Order theOrder){

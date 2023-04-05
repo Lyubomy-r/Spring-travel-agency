@@ -5,55 +5,48 @@
 <html>
 
 <head>
-    <title>List Customers</title>
-
-    <!-- reference our style sheet -->
-
-
+    <title>Table</title>
 
 </head>
 
 <body>
 
-<div id="wrapper">
-    <div id="header">
+<div >
+    <div >
         <h2>Order for Users</h2>
     </div>
 </div>
 
-<div id="container">
+<div >
 
-    <div id="content">
+    <div >
 
 
+        <div>
+            <h3>User : ${orderList.get(0).user.firstName}</h3>
+        </div>
 
-        <!--  add our html table here -->
 
         <table>
             <tr>
+
                 <th>Name Hotel</th>
                 <th>dateOfArrive</th>
-                <th>dateOfArrive</th>
                 <th>departureDate</th>
-                <th>Id Room</th>
+                <th>Number Room</th>
 
                 <th>Action</th>
             </tr>
 
-            <!-- loop over and print our customers -->
 
-            <c:forEach var="tempCustomer" items="${customers}">
+
+            <c:forEach var="userOrders" items="${orderList}">
                 <tr>
-                    <td> ${tempCustomer.hotel.nameHotel} </td>
-                    <td> ${tempCustomer.dateOfArrive} </td>
-                    <td> ${tempCustomer.dateOfArrive} </td>
-                    <td> ${tempCustomer.departureDate} </td>
-                    <td> ${tempCustomer.room.numberRoom} </td>
 
-
-
-
-
+                    <td> ${userOrders.hotel.nameHotel} </td>
+                    <td> ${userOrders.dateOfArrive} </td>
+                    <td> ${userOrders.departureDate} </td>
+                    <td> ${userOrders.room.numberRoom} </td>
 
                 </tr>
 

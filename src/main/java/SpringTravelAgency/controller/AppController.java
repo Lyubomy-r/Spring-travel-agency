@@ -1,6 +1,7 @@
 package SpringTravelAgency.controller;
 
 
+
 import SpringTravelAgency.entity.Hotel;
 import SpringTravelAgency.entity.Order;
 import SpringTravelAgency.entity.Room;
@@ -66,6 +67,7 @@ public class AppController {
                             @RequestParam("departureDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate myDate1, Model theModel){
 
         List<Room> rooms= roomService.freeRoomList( country,myDate,myDate1);
+
         theModel.addAttribute("customers", rooms);
         return "list-room";
     }
@@ -76,59 +78,14 @@ public class AppController {
 
         theModel.addAttribute("hotelList", hotelList);
 
-
-
         return "search-hotel";
     }
 
-    @RequestMapping("/addHotel")
-    public String addHotel(Model theModel){
-        Hotel hotel=new Hotel();
-
-        hotel.setNameHotel("NewImp");
-        hotel.setDescription("Best hotel in Maiymi");
-        hotel.setCountry("Conect");
-        hotel.setCity("Island Connect");
-        hotelService.addHotel(hotel);
-
-
-        theModel.addAttribute("customers", hotel);
-        return "redirect:/api/showRoom";
-    }
-
-    @RequestMapping ("/addRoom")
-    public String addRoom(Model theModel){
-        Hotel hotel= hotelService.getHotelAllConnections(6L);
-        Room room=new Room();
-
-        room.setNumberRoom(7);
-        room.setType("DOUBLE");
-        room.setPrice(2400.00);
-        room.addHotelToRoom(hotel);
-        roomService.addRoom(room);
-
-        return"redirect:/api/showRoom";
-    }
-
-    @RequestMapping ("/updateRoom")
-    public String updateRoom(Model theModel){
-        Hotel hotel= hotelService.getHotelAllConnections(1L);
-        Room room= roomService.getRoomAllConnections(3L);
-
-        room.setNumberRoom(10);
-        room.setType("SINGEl");
-        room.setPrice(3500.00);
-        room.addHotelToRoom(hotel);
-        roomService.updateRoom(room);
-
-
-        return"redirect:/api/showRoom";
-    }
     @RequestMapping("/showRoom")
-    public String showRoom(Model theModel){
-        List<Room> roomList= roomService.getRoomList();
+    public String showRoom(@RequestParam("hotelId")Long hotelId,  Model theModel){
+        List<Room> roomList= roomService.findRoomListByHotelId(hotelId);
 
-        theModel.addAttribute("customers", roomList);
+        theModel.addAttribute("modelRooms", roomList);
 
         return "list-room";
     }
@@ -144,6 +101,7 @@ public class AppController {
         user.setPassword("456");
 
         userService.addUser(user);
+
 
         return"redirect:/api/showUser";
     }
@@ -162,10 +120,10 @@ public class AppController {
         Room room= roomService.getRoomAllConnections(roomId);
         Hotel hotel=room.getHotel();
         User user = userService.getUserAllConnectionsByName(principal.getName());
+
         Order myOrder=new Order();
         LocalDate dateArrive= LocalDate.now().plusMonths(2);
         LocalDate dateDeparture= LocalDate.now().plusMonths(2).plusDays(1);
-
         myOrder.setDateOfArrive( dateArrive);
         myOrder.setDepartureDate(dateDeparture);
         myOrder.addOrderToHotel(hotel);
@@ -181,7 +139,7 @@ public class AppController {
     public String showOrder(Model theModel){
         List<Order> orderList= orderService.getOrderList();
 
-        theModel.addAttribute("customers", orderList);
+        theModel.addAttribute("orderList", orderList);
         return "order-list";
     }
 

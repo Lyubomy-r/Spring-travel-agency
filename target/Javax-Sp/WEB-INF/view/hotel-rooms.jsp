@@ -6,7 +6,11 @@
 <html>
 
 <head>
-    <title>Table</title>
+    <title>List Customers</title>
+
+    <!-- reference our style sheet -->
+
+
 
 </head>
 
@@ -14,7 +18,7 @@
 
 <div >
     <div >
-        <h2>We have free room for you</h2>
+        <h2>Hotel has this rooms</h2>
     </div>
 </div>
 
@@ -22,28 +26,37 @@
 
     <div >
 
+        <h3> HOTEL NAME : ${modelRooms.get(0).hotel.nameHotel}</h3>
+
+        <!--  add our html table here -->
 
         <table>
             <tr>
-                <th>Name Hotel</th>
+
                 <th>Number Room</th>
                 <th>Type Room</th>
                 <th>Price Room</th>
                 <th>Action</th>
             </tr>
 
+            <!-- loop over and print our customers -->
+            <%--            <form:hidden path="id" >--%>
+            <%--                        <security:authentication property="principal.username"/>--%>
+            <%--            </form:hidden>--%>
             <c:forEach var="tempRoom" items="${modelRooms}">
 
-                <c:url var="reservedRoom" value="/api/addOrder">
+                <c:url var="updateRoom" value="/management/updateRoom">
                     <c:param name="roomId" value="${tempRoom.roomId}"/>
                 </c:url>
 
                 <tr>
-                    <td> ${tempRoom.hotel.nameHotel} </td>
+
                     <td> ${tempRoom.numberRoom} </td>
                     <td> ${tempRoom.type} </td>
                     <td> ${tempRoom.price} </td>
-                    <td><a href="${reservedRoom}">Reserved Room</a></td>
+                    <td><a href="${updateRoom}">Update</a></td>
+
+
 
 
                 </tr>
@@ -57,7 +70,7 @@
 </div>
 <div>
     <hr>
-    <a href="${pageContext.request.contextPath}/api/showFormSearch">Back to Search Page</a>
+    <a href="${pageContext.request.contextPath}/management/showeAllHotels">Back to Hotels table</a>
 </div>
 
 </body>

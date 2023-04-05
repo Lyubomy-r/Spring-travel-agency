@@ -31,6 +31,13 @@ public class RoomServiceImp implements RoomService{
         return roomDAO.findRoomById(theId);
     }
     @Override
+    public Room findRoomByHotelName(String hotelName){
+        return roomDAO.findRoomByHotelName(hotelName);
+    }
+    public List<Room> findRoomListByHotelId(Long hotelId){
+        return roomDAO.findRoomListByHotelId(hotelId);
+    }
+    @Override
     public List<Room> freeRoomList(String theCountry, LocalDate arrivalDate, LocalDate departureDate){
         return roomDAO.freeRoomList(theCountry,arrivalDate,departureDate);
     }

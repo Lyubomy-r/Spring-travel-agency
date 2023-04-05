@@ -4,7 +4,7 @@ package SpringTravelAgency.dao;
 import SpringTravelAgency.entity.Order;
 
 import javax.persistence.Query;
-import javax.transaction.Transactional;
+import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,8 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-
-public class OrderImp implements OrderDAO{
+public class OrderImp implements OrderDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -40,6 +39,13 @@ public class OrderImp implements OrderDAO{
         List<Order> allOrder= queryGetOrders.getResultList();
 
         return allOrder;
+    }
+    @Override
+    public List<Order> getAllUserOrders(Long userId){
+        Query query= entityManager.createQuery(" SELECT o FROM Order o LEFT JOIN FETCH o.user WHERE o.user.userId=: userId ")
+                .setParameter("userId", userId).setHint(QueryHints.HINT_READONLY,true);
+        List<Order> userOrdersList=query.getResultList();
+        return userOrdersList;
     }
     @Override
     public void addOrder(Order theOrder){

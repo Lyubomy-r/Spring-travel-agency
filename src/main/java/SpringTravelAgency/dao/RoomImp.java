@@ -1,5 +1,6 @@
 package SpringTravelAgency.dao;
 
+
 import SpringTravelAgency.entity.Room;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
@@ -22,6 +23,23 @@ public class RoomImp implements RoomDAO {
     public Room findRoomById(Long theId) {
         Room room=entityManager.find(Room.class,theId);
         return room;
+    }
+
+    @Override
+    public Room findRoomByHotelName(String hotelName){
+
+        Query hotetName=entityManager.createQuery("SELECT r FROM Room r  WHERE r.hotel.nameHotel=:Name")
+                .setParameter("Name",hotelName).setHint(QueryHints.HINT_READONLY,true);
+        Room room= (Room) hotetName.getSingleResult();
+        return room;
+    }
+    @Override
+    public List<Room> findRoomListByHotelId(Long hotelId){
+        Query findRooms=entityManager.createQuery("SELECT r FROM Room r WHERE r.hotel.hotelId=:ID")
+                .setParameter("ID",hotelId).setHint(QueryHints.HINT_READONLY,true);
+        List<Room> roomList=findRooms.getResultList();
+        return roomList;
+
     }
 
     @Override

@@ -2,20 +2,15 @@ package SpringTravelAgency.dao;
 
 
 import SpringTravelAgency.entity.Hotel;
-import SpringTravelAgency.entity.Order;
-import SpringTravelAgency.entity.Room;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-
 public class HotelImp implements HotelDAO{
 
     @PersistenceContext
@@ -38,10 +33,16 @@ public class HotelImp implements HotelDAO{
 
         return hotel;
     }
-
-
     @Override
-    public Hotel getHotelAllConnections(Long theId) {
+    public Hotel findHotelByName(String hotelName){
+
+        Query hotelByName=entityManager.createQuery("SELECT h FROM Hotel h Left JOIN FETCH h.rooms WHERE h.nameHotel=:Name")
+                .setParameter("Name",hotelName).setHint(QueryHints.HINT_READONLY,true);
+        Hotel hotel= (Hotel) hotelByName.getSingleResult();
+        return hotel;
+    }
+    @Override
+    public Hotel getHotelAllConnectionsById(Long theId) {
         Query query = entityManager.createQuery("SELECT DISTINCT h FROM Hotel h LEFT join fetch h.rooms WHERE h.hotelId=:theId")
                 .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false);
         query.setParameter("theId",theId);
