@@ -2,7 +2,6 @@ package SpringTravelAgency.dao;
 
 
 import SpringTravelAgency.entity.Order;
-
 import javax.persistence.Query;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
@@ -25,7 +24,7 @@ public class OrderImp implements OrderDAO {
     @Override
     public List<Order> getOrderList(){
 
-        Query queryGetOrders=entityManager.createQuery("SELECT o FROM Order o");
+        Query queryGetOrders=entityManager.createQuery("SELECT o FROM Order o").setHint(QueryHints.HINT_READONLY,true);
         List<Order> allOrder= queryGetOrders.getResultList();
 
         return allOrder;
@@ -34,7 +33,7 @@ public class OrderImp implements OrderDAO {
     public List<Order> getFreeRoomList(LocalDate localDate){
 
         Query queryGetOrders=entityManager.createQuery("SELECT DISTINCT o FROM Order o LEFT JOIN FETCH o.hotel  LEFT JOIN FETCH o.user  " +
-                "LEFT JOIN FETCH o.room where o.dateOfArrive<>:searchDate");
+                "LEFT JOIN FETCH o.room where o.dateOfArrive<>:searchDate").setHint(QueryHints.HINT_READONLY,true);
         queryGetOrders.setParameter("searchDate",localDate);
         List<Order> allOrder= queryGetOrders.getResultList();
 

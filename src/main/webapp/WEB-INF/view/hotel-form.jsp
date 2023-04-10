@@ -22,6 +22,7 @@
 
     <form:form action="saveHotel" modelAttribute="hotel" method="POST">
 
+        <!-- need to associate this data with customer id -->
         <form:hidden path="hotelId" />
 
         <table>

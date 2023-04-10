@@ -61,7 +61,10 @@
     </div>
 
 </div>
-
+<hr>
+<p>
+    <a href="${pageContext.request.contextPath}/">Back to Home</a>
+</p>
 
 </body>
 

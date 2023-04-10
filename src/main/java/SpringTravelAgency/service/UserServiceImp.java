@@ -23,8 +23,10 @@ public class UserServiceImp implements UserService {
         return userDAO.getUserAllConnectionsById(theId);
     }
     @Override
-    public User getUserAllConnectionsByName(String nameUred){
-        return userDAO.getUserAllConnectionsByName(nameUred);
+    public User getUserByEmail(String userEmail){return userDAO.getUserByEmail(userEmail);}
+    @Override
+    public User getUserAllConnectionsByName(String nameUser){
+        return userDAO.getUserAllConnectionsByName(nameUser);
     }
     @Override
     public User findUserById(Long theId){

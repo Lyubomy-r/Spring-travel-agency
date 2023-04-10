@@ -5,21 +5,29 @@
 <html>
 
 <head>
-    <title>Table</title>
+    <title>List Customers</title>
+
+    <!-- reference our style sheet -->
+
+
 
 </head>
 
 <body>
 
-<div >
-    <div >
-        <h2></h2>
+<div id="wrapper">
+    <div id="header">
+        <h2>CRM - Customer Relationship Manager</h2>
     </div>
 </div>
 
-<div >
+<div id="container">
 
-    <div >
+    <div id="content">
+
+
+
+        <!--  add our html table here -->
 
         <table>
             <tr>
@@ -31,7 +39,11 @@
                 <th>Action</th>
             </tr>
 
+            <!-- loop over and print our customers -->
             <c:forEach var="tempCustomer" items="${customers}">
+
+
+
 
 
                 <tr>
@@ -41,6 +53,8 @@
                     <td> ${tempCustomer.room.numberRoom} </td>
                     <td> ${tempCustomer.room.price} </td>
                     <td> ${tempCustomer.orderId} </td>
+
+
 
 
                 </tr>

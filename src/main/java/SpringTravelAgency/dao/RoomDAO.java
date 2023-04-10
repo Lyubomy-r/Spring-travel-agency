@@ -11,8 +11,11 @@ public interface RoomDAO {
     public List<Room> getRoomListAllConnections();
     public Room findRoomById(Long theId);
     public Room findRoomByHotelName(String hotelName);
-    public List<Room> freeRoomList(String theCountry, LocalDate arrivalDate,
+    public List<Room> freeRoomList(Long theCountry, LocalDate arrivalDate,
                                    LocalDate departureDate);
+
+    public List<Room> freeRoomListByName(String theCountry, LocalDate arrivalDate,
+                                         LocalDate departureDate);
     public List<Room> findRoomListByHotelId(Long hotelId);
     public List<Room> getRoomList();
     public void addRoom(Room theRoom);

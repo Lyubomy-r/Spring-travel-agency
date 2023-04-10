@@ -68,7 +68,7 @@
 
 
     <p>
-        <a href="${pageContext.request.contextPath}/api/showeAllHotels">Back to List</a>
+        <a href="${pageContext.request.contextPath}/management/showeAllHotels">Back to List</a>
     </p>
 
 </div>

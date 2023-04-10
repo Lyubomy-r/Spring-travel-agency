@@ -6,7 +6,11 @@
 <html>
 
 <head>
-    <title>Table</title>
+    <title>List Customers</title>
+
+    <!-- reference our style sheet -->
+
+
 
 </head>
 

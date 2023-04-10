@@ -14,27 +14,38 @@
 
 <div >
     <div >
-        <h2>CRM - Customer Relationship Manager</h2>
+        <h2></h2>
     </div>
 </div>
 
 <div >
     <h3>Search Hotel</h3>
+</div >
+    <div >
+
+<%--        <form:hidden path="hotId" value="${hotelName.hotelId}" />--%>
 
     <form:form action="freeHotel"  method="POST">
 
         <table>
             <tbody>
+<%--            <c:url var="UserOrder" value="/management/showUserOrders">--%>
+<%--                <c:param name="hotelId" value="${hotelName.hotelId}"/>--%>
+<%--            </c:url>--%>
+
+            <input name="hotId" type="hidden" value="${hotelName.hotelId}"/>
+
 
             <tr>
-                <td><label>Country:</label></td>
-                <select  name="searchCountry">
-                    <c:forEach var="temphotelList" items="${hotelList}">
-                        <option value="${temphotelList.country}" label="${temphotelList.country}"/>
-                    </c:forEach>
+                <td><label>Hotel Name:</label></td>
+<%--                <select  name="searchCountry">--%>
+<%--                    <c:forEach var="temphotelList" items="${hotelList}">--%>
+<%--                   <option value="${temphotelList.country}" label="${temphotelList.country}"/>--%>
+<%--                    </c:forEach>--%>
 
-                </select>
-
+<%--                </select>--%>
+                <td><input type="text" name="searchCountry" value="${hotelName.nameHotel}" /></td>
+<%--                <td><input type="text" name="arrivalDate" /></td>--%>
             </tr>
 
             <tr>

@@ -6,21 +6,33 @@
 <html>
 
 <head>
-    <title>Table</title>
+    <title>List Customers</title>
+
+    <!-- reference our style sheet -->
+
+
 
 </head>
 
 <body>
 
-<div >
-    <div >
+<div id="wrapper">
+    <div id="header">
         <h2>We have free room for you</h2>
+        <h3>On your date : <form:form action="addOrder"  method="POST">
+    <input name="arrivalDateSearch" type="date" value="${arrivalDate}"/> / <input name="departureDateSearch" type="date" value="${departureDate}"/>
+        </form:form></h3>
+
     </div>
 </div>
 
-<div >
+<div id="container">
 
-    <div >
+    <div id="content">
+
+
+
+
 
 
         <table>
@@ -32,11 +44,19 @@
                 <th>Action</th>
             </tr>
 
-            <c:forEach var="tempRoom" items="${modelRooms}">
+            <!-- loop over and print our customers -->
+<%--            <form:hidden path="id" >--%>
+<%--                        <security:authentication property="principal.username"/>--%>
+<%--            </form:hidden>--%>
+<%--            <input name="arrivalDateSearch" type="hidden" value="${arrivalDate}"/>--%>
+<%--            <input name="departureDateSearch" type="hidden" value="${departureDate}"/>--%>
+                    <c:forEach var="tempRoom" items="${modelRooms}">
 
-                <c:url var="reservedRoom" value="/api/addOrder">
-                    <c:param name="roomId" value="${tempRoom.roomId}"/>
-                </c:url>
+                        <c:url var="reservedRoom" value="/api/addOrder">
+                            <c:param name="roomId" value="${tempRoom.roomId}"/>
+                            <c:param name="arrivalDateSearch"  value="${arrivalDate}"/>
+                            <c:param name="departureDateSearch" value="${departureDate}"/>
+                        </c:url>
 
                 <tr>
                     <td> ${tempRoom.hotel.nameHotel} </td>
@@ -46,9 +66,11 @@
                     <td><a href="${reservedRoom}">Reserved Room</a></td>
 
 
+
+
                 </tr>
 
-            </c:forEach>
+                    </c:forEach>
 
         </table>
 

@@ -1,5 +1,4 @@
 package SpringTravelAgency.entity;
-
 import javax.persistence.*;
 
 import java.util.List;
@@ -15,7 +14,6 @@ public class Hotel {
 
     @Column(name="name_hotel")
     private String nameHotel;
-
 
     @Column(name="description")
     private String description;

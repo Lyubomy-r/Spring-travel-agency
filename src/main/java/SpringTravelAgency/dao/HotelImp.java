@@ -11,17 +11,17 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
+
 public class HotelImp implements HotelDAO{
 
     @PersistenceContext
     private EntityManager entityManager;
 
 
-
     @Override
     public List<Hotel> getHotelList() {
 
-        Query hotelQueue2= entityManager.createQuery("Select e from Hotel e");
+        Query hotelQueue2= entityManager.createQuery("Select e from Hotel e").setHint(QueryHints.HINT_READONLY, true);
         List <Hotel> findHotel = hotelQueue2.getResultList();
 
         return findHotel;
@@ -42,14 +42,22 @@ public class HotelImp implements HotelDAO{
         return hotel;
     }
     @Override
+    public List<Hotel> findHotelByCountry(String country){
+
+        Query hotelCountry=entityManager.createQuery("SELECT h FROM Hotel h WHERE h.country=:countryName")
+                .setParameter("countryName",country).setHint(QueryHints.HINT_READONLY,true);
+        List<Hotel> hotel= hotelCountry.getResultList();
+        return hotel;
+    }
+    @Override
     public Hotel getHotelAllConnectionsById(Long theId) {
         Query query = entityManager.createQuery("SELECT DISTINCT h FROM Hotel h LEFT join fetch h.rooms WHERE h.hotelId=:theId")
-                .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false);
+                .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false).setHint(QueryHints.HINT_READONLY,true);
         query.setParameter("theId",theId);
         Hotel findHotel= (Hotel) query.getSingleResult();
 
         Query query2 = entityManager.createQuery("SELECT DISTINCT h FROM Hotel h LEFT join fetch h.orderList WHERE h.hotelId=:theIdR")
-                .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false);
+                .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false).setHint(QueryHints.HINT_READONLY,true);
         query2.setParameter("theIdR",theId);
         findHotel= (Hotel) query2.getSingleResult();
 

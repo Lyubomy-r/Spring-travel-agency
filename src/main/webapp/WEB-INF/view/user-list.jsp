@@ -5,22 +5,29 @@
 <html>
 
 <head>
-    <title>Table</title>
+    <title>List Customers</title>
+
+    <!-- reference our style sheet -->
+
+
 
 </head>
 
 <body>
 
-<div >
-    <div >
+<div id="wrapper">
+    <div id="header">
         <h2>Order for Users</h2>
     </div>
 </div>
 
-<div >
+<div id="container">
 
-    <div >
+    <div id="content">
 
+
+
+        <!--  add our html table here -->
 
         <table>
             <tr>
@@ -30,6 +37,8 @@
                 <th>Orders</th>
                 <th>Action</th>
             </tr>
+
+            <!-- loop over and print our customers -->
 
             <c:forEach var="User" items="${userList}">
                 <c:url var="UserOrder" value="/management/showUserOrders">
@@ -44,13 +53,18 @@
                 </tr>
 
             </c:forEach>
-
+<%--        <c:forEach var="tempCustomer" items="${userList}">--%>
+<%--            <td> ${tempCustomer.orderList} </td>--%>
+<%--        </c:forEach>--%>
         </table>
 
     </div>
 
 </div>
-
+<hr>
+<p>
+    <a href="${pageContext.request.contextPath}/">Back to Home</a>
+</p>
 
 </body>
 

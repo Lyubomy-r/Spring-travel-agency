@@ -10,6 +10,7 @@ public interface HotelService {
     public List<Hotel> getHotelList();
     public Hotel findHotelById(Long theId);
     public Hotel findHotelByName(String hotelName);
+    public List<Hotel> findHotelByCountry(String country);
     public void addHotel(Hotel theHotel);
     public void updateHotel(Hotel theHotel);
     public void deleteHotelById(Long theHotel);

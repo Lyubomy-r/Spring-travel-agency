@@ -5,7 +5,7 @@
 <html>
 
 <head>
-    <title>Table</title>
+    <title>List Customers</title>
 
 </head>
 
@@ -21,11 +21,9 @@
 
     <div >
 
-
         <div>
             <h3>User : ${orderList.get(0).user.firstName}</h3>
         </div>
-
 
         <table>
             <tr>
@@ -34,10 +32,8 @@
                 <th>dateOfArrive</th>
                 <th>departureDate</th>
                 <th>Number Room</th>
-
                 <th>Action</th>
             </tr>
-
 
 
             <c:forEach var="userOrders" items="${orderList}">
@@ -57,7 +53,9 @@
     </div>
 
 </div>
-
+<p>
+    <a href="${pageContext.request.contextPath}/management/showUsers">Back to User</a>
+</p>
 
 </body>
 

@@ -1,16 +1,14 @@
 package SpringTravelAgency.config;
 
-
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -29,8 +27,21 @@ import java.util.Properties;
 @PropertySource({ "classpath:persistence.properties" })
 public class AppConfig  implements WebMvcConfigurer {
 
+    @Value("${jdbc.driver}")
+    private String driverClassName;
+    @Value("${jdbc.user}")
+    private String user;
+    @Value("${jdbc.password}")
+    private String password;
+    @Value("${jdbc.url}")
+    private String url;
+
+
     @Autowired
     private Environment env;
+
+    public AppConfig() {
+    }
 
     @Bean
     public ViewResolver viewResolver(){
@@ -44,6 +55,21 @@ public class AppConfig  implements WebMvcConfigurer {
     }
 
     @Bean
+    @Profile("dev")
+    @Primary
+    public DataSource dataSource(){
+        DriverManagerDataSource dataSource =new DriverManagerDataSource();
+        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUsername(user);
+        dataSource.setPassword(password);
+        dataSource.setUrl(url);
+
+        return dataSource;
+    }
+
+
+    @Bean
+    @Profile("prod")
     public DataSource myDataSource() {
 
         // create connection pool
@@ -77,7 +103,7 @@ public class AppConfig  implements WebMvcConfigurer {
 
         String propVal = env.getProperty(propName);
 
-
+        // now convert to int
         int intPropVal = Integer.parseInt(propVal);
 
         return intPropVal;
@@ -92,20 +118,14 @@ public class AppConfig  implements WebMvcConfigurer {
                 .addResourceLocations("/resources/");
     }
 
-
-    Properties additionalProperties() {
-        Properties properties = new Properties();
-
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-
-        return properties;
-    }
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
 
         HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
-
+        adapter.setDatabase(Database.MYSQL);
         adapter.setShowSql(true);
+
+        // adapter.setGenerateDdl(true);
         return adapter;
     }
 
@@ -115,7 +135,7 @@ public class AppConfig  implements WebMvcConfigurer {
         emf.setDataSource(myDataSource);
         emf.setJpaVendorAdapter(jpaVendorAdapter);
         emf.setPackagesToScan("SpringTravelAgency");
-        emf.setJpaProperties(additionalProperties());
+
         return emf;
     }
 

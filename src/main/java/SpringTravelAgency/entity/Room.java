@@ -1,7 +1,6 @@
 package SpringTravelAgency.entity;
 
 
-
 import javax.persistence.*;
 
 import java.util.List;
@@ -31,8 +30,6 @@ public class Room {
 
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "room")
     private List<Order> orderList;
-
-
 
     public void addOrderToRoom(Order theOrder){
         this.orderList.add(theOrder);

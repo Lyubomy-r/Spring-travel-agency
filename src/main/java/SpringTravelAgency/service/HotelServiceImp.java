@@ -38,6 +38,10 @@ public class HotelServiceImp implements HotelService {
         return hotelDAO.findHotelByName(hotelName);
     }
     @Override
+    public List<Hotel> findHotelByCountry(String country){
+        return hotelDAO.findHotelByCountry(country);
+    }
+    @Override
     public void addHotel(Hotel theHotel){
         hotelDAO.addHotel(theHotel);
     }

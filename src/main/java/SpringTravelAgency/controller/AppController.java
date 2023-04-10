@@ -1,22 +1,21 @@
 package SpringTravelAgency.controller;
 
-
-
 import SpringTravelAgency.entity.Hotel;
 import SpringTravelAgency.entity.Order;
 import SpringTravelAgency.entity.Room;
 import SpringTravelAgency.entity.User;
+import SpringTravelAgency.entity.enumpack.Role;
+import SpringTravelAgency.entity.enumpack.Status;
 import SpringTravelAgency.service.HotelService;
 import SpringTravelAgency.service.OrderService;
 import SpringTravelAgency.service.RoomService;
 import SpringTravelAgency.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -28,21 +27,23 @@ public class AppController {
 
     private OrderService orderService;
 
-
     private HotelService hotelService;
-
 
     private RoomService roomService;
 
     private UserService userService;
 
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AppController (OrderService orderService, HotelService hotelService, RoomService roomService, UserService userService){
+    public AppController (OrderService orderService, HotelService hotelService,
+                          RoomService roomService, UserService userService,
+                          PasswordEncoder passwordEncoder){
         this.orderService = orderService;
         this.hotelService = hotelService;
         this.roomService = roomService;
         this.userService = userService;
+        this.passwordEncoder=passwordEncoder;
     }
 
     @RequestMapping("/form")
@@ -62,23 +63,48 @@ public class AppController {
 
         return "form-list";
     }
+
     @RequestMapping("/freeHotel")
-    public String freeHotel(@RequestParam("searchCountry")String country, @RequestParam ("arrivalDate") @DateTimeFormat(pattern = "yyyy-MM-dd")  LocalDate myDate,
-                            @RequestParam("departureDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate myDate1, Model theModel){
+    public String freeHotel(@RequestParam("hotId") Long hotelId, @RequestParam("searchCountry")String hotelName,
+                            @RequestParam ("arrivalDate") @DateTimeFormat(pattern = "yyyy-MM-dd")  LocalDate myDate,
+                            @RequestParam("departureDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate myDate1,
+                            Model theModel){
+        LocalDate arrival=myDate;
+        LocalDate departure=myDate1;
 
-        List<Room> rooms= roomService.freeRoomList( country,myDate,myDate1);
 
-        theModel.addAttribute("customers", rooms);
+        Hotel hotel=hotelService.findHotelById(hotelId);
+        if(hotelName.equals(hotel.getNameHotel())){
+            List<Room> rooms= roomService.freeRoomList( hotelId,myDate,myDate1);
+            theModel.addAttribute("modelRooms", rooms);
+        }else{
+            List<Room> roomList= roomService.freeRoomListByName( hotelName,myDate,myDate1);
+            theModel.addAttribute("modelRooms", roomList);
+        }
+        theModel.addAttribute("arrivalDate", arrival);
+        theModel.addAttribute("departureDate",departure);
+
         return "list-room";
     }
 
     @RequestMapping("/showFormSearch")
-    public String showFormSearch(Model theModel){
+    public String showFormSearch(@RequestParam("hotelId")Long hotelId, Model theModel){
         List<Hotel> hotelList= hotelService.getHotelList() ;
+        Hotel hotelName=hotelService.findHotelById(hotelId);
 
-        theModel.addAttribute("hotelList", hotelList);
+        theModel.addAttribute("hotelName", hotelName);
+
+
 
         return "search-hotel";
+    }
+
+    @RequestMapping  ("/showHotelInCountry")
+    public String showHotelInCountry(@RequestParam("searchCountry") String country, Model theModel){
+        List<Hotel> hotelList=hotelService.findHotelByCountry(country);
+
+        theModel.addAttribute("countryList",hotelList );
+        return "index";
     }
 
     @RequestMapping("/showRoom")
@@ -90,21 +116,7 @@ public class AppController {
         return "list-room";
     }
 
-    @RequestMapping ("/addUser")
-    public String addUser(Model theModel){
 
-        User user=new User();
-
-        user.setFirstName("NewFer");
-        user.setLastName("Kuler");
-        user.setEmail("new@code.com");
-        user.setPassword("456");
-
-        userService.addUser(user);
-
-
-        return"redirect:/api/showUser";
-    }
 
     @RequestMapping("/showUser")
     public String showUser(Model theModel){
@@ -114,16 +126,42 @@ public class AppController {
         return "user-list";
     }
 
+    @GetMapping("/showRegistrationForm")
+    public String showRegistrationForm(Model theModel){
+        User user=new User();
+        theModel.addAttribute("userRegistration", user);
+        return "registration-form";
+    }
+
+
+    @PostMapping("/saveUser")
+    public String saveUser(@ModelAttribute("userRegistration")User theUser) throws Exception {
+        List<User> userList=userService.getUserList();
+        Boolean emailExist = userList.stream().anyMatch(user->user.getEmail().equals(theUser.getEmail()));
+        if(emailExist){
+            throw new Exception(
+                    "There is an account with that email adress:" + theUser.getEmail());
+        }
+
+        theUser.setPassword(passwordEncoder.encode(theUser.getPassword()));
+        theUser.setRole(Role.USER);
+        theUser.setStatus(Status.ACTIVE);
+        userService.addUser(theUser);
+        return "redirect:/";
+    }
+
     @RequestMapping ("/addOrder")
-    public String addOrder(@RequestParam("roomId") Long roomId , Model theModel,   Principal principal){
+    public String addOrder(@RequestParam("roomId") Long roomId ,
+                           @RequestParam ("arrivalDateSearch") @DateTimeFormat(pattern = "yyyy-MM-dd")  LocalDate myDate,
+                           @RequestParam("departureDateSearch") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate myDate1, Principal principal,Model theModel){
 
         Room room= roomService.getRoomAllConnections(roomId);
-        Hotel hotel=room.getHotel();
-        User user = userService.getUserAllConnectionsByName(principal.getName());
+        Hotel hotel=hotelService.getHotelAllConnections(room.getHotel().getHotelId());
+        User user = userService.getUserByEmail(principal.getName());
 
         Order myOrder=new Order();
-        LocalDate dateArrive= LocalDate.now().plusMonths(2);
-        LocalDate dateDeparture= LocalDate.now().plusMonths(2).plusDays(1);
+        LocalDate dateArrive= myDate;
+        LocalDate dateDeparture= myDate1;
         myOrder.setDateOfArrive( dateArrive);
         myOrder.setDepartureDate(dateDeparture);
         myOrder.addOrderToHotel(hotel);
@@ -131,8 +169,9 @@ public class AppController {
         myOrder.addUserToOrder(user);
         orderService.addOrder(myOrder);
 
+        theModel.addAttribute("userId", user.getUserId());
 
-        return"redirect:/api/showOrder";
+        return "redirect:/api/showUserOrders";
     }
 
     @RequestMapping("/showOrder")
@@ -143,13 +182,12 @@ public class AppController {
         return "order-list";
     }
 
-    @RequestMapping("/freeOrder")
-    public String showFreeOrder(Model theModel){
-        LocalDate myDate=LocalDate.of(2023,04,27);
-        List<Order> orderList= orderService.getFreeRoomList(myDate);
+    @GetMapping("/showUserOrders")
+    public String showUserOrders(@ModelAttribute("userId") Long userId, Model theModel){
+        List<Order> orderList= orderService.getAllUserOrders(userId);
 
-        theModel.addAttribute("customers", orderList);
-        return "free-hotel";
+        theModel.addAttribute("orderList", orderList);
+        return "user-orders";
     }
 
 }

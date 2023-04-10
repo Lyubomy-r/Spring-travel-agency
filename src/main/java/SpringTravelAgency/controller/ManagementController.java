@@ -9,6 +9,7 @@ import SpringTravelAgency.service.OrderService;
 import SpringTravelAgency.service.RoomService;
 import SpringTravelAgency.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class ManagementController {
 
     }
 
-    @GetMapping("/showeAllHotels")
+    @GetMapping("/showAllHotels")
     public String  showeAllHotels(Model theModel){
         List<Hotel> hotelList=hotelService.getHotelList();
         theModel.addAttribute("hotel",hotelList);
@@ -48,6 +49,8 @@ public class ManagementController {
         return "hotel-form";
     }
     @GetMapping("/updateHotel")
+    @PreAuthorize("hasAuthority('developers:read')")
+
     public String updateHotel(@RequestParam("hotelId")Long hotelId,Model theModel){
         Hotel hotel = hotelService.findHotelById(hotelId);
 
@@ -59,11 +62,14 @@ public class ManagementController {
     @PostMapping("/saveHotel")
     public String saveHotel(@ModelAttribute("hotel") Hotel theHotel ){
 
-        hotelService.addHotel(theHotel);
+        if(theHotel.getHotelId()==null){
+            hotelService.addHotel(theHotel);
+        }else{
+            hotelService.updateHotel(theHotel);
+        }
 
-        return "redirect:/api/showeAllHotels";
+        return "redirect:/management/showAllHotels";
     }
-
 
     @GetMapping("/addRoom")
     public String addRoom(Model theModel){
@@ -84,7 +90,6 @@ public class ManagementController {
             hotel = hotelService.findHotelByName(hotelName);
         }
 
-
         if (theRoom.getRoomId() == null) {
             theRoom.addHotelToRoom(hotel);
             roomService.addRoom(theRoom);
@@ -93,16 +98,17 @@ public class ManagementController {
             roomService.updateRoom(theRoom);
         }
 
-        return "redirect:/management/showeAllHotels";
+
+        return "redirect:/management/showAllHotels";
     }
 
     @PostMapping ("/updateRoom")
     public String updateRoom(@ModelAttribute("room") Room theRoom) {
         Hotel hotel=hotelService.findHotelByName(theRoom.getHotel().getNameHotel());
         theRoom.addHotelToRoom(hotel);
-            roomService.updateRoom(theRoom);
+        roomService.updateRoom(theRoom);
 
-        return "redirect:/management/showeAllHotels";
+        return "redirect:/management/showAllHotels";
     }
     @GetMapping("/updateRoom")
     public String updateRoom(@RequestParam("roomId")Long hotelId,Model theModel){

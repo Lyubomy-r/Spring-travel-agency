@@ -1,5 +1,7 @@
 package SpringTravelAgency.entity;
 
+import SpringTravelAgency.entity.enumpack.Role;
+import SpringTravelAgency.entity.enumpack.Status;
 
 import javax.persistence.*;
 
@@ -26,9 +28,32 @@ public class User {
     @Column(name="password")
     private String password;
 
+    @Column(name="role")
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
+
+    @Column(name="status")
+    @Enumerated(value = EnumType.STRING)
+    private Status status;
+
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "user")
     private List<Order> orderList;
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     public Long getUserId() {
         return userId;

@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.example</groupId>
   <artifactId>Javax-Sp</artifactId>
@@ -9,11 +9,11 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <springframework.version>5.3.9</springframework.version>
+    <springframework.version>5.3.24</springframework.version>
     <hibernate.version>5.4.1.Final</hibernate.version>
     <mysql.connector.version>8.0.29</mysql.connector.version>
     <c3po.version>0.9.5.2</c3po.version>
-    <springsecurity.version>5.3.7.RELEASE</springsecurity.version>
+    <springsecurity.version>5.5.2</springsecurity.version>
 
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -128,19 +128,18 @@
     <finalName>Javax-Sp</finalName>
     <plugins>
       <plugin>
-        <!-- Add Maven coordinates (GAV) for: maven-war-plugin -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <version>3.2.0</version>
       </plugin>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-                <source>16</source>
-                <target>16</target>
-            </configuration>
-        </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>16</source>
+          <target>16</target>
+        </configuration>
+      </plugin>
 
     </plugins>
   </build>

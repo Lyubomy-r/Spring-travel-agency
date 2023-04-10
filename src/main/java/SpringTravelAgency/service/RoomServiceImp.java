@@ -1,5 +1,6 @@
 package SpringTravelAgency.service;
 
+
 import SpringTravelAgency.dao.RoomDAO;
 import SpringTravelAgency.entity.Room;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,13 @@ public class RoomServiceImp implements RoomService{
         return roomDAO.findRoomListByHotelId(hotelId);
     }
     @Override
-    public List<Room> freeRoomList(String theCountry, LocalDate arrivalDate, LocalDate departureDate){
+    public List<Room> freeRoomList(Long theCountry, LocalDate arrivalDate, LocalDate departureDate){
         return roomDAO.freeRoomList(theCountry,arrivalDate,departureDate);
+    }
+    @Override
+    public List<Room> freeRoomListByName(String theCountry, LocalDate arrivalDate,
+                                         LocalDate departureDate){
+        return roomDAO.freeRoomListByName(theCountry,arrivalDate,departureDate);
     }
     @Override
     public List<Room> getRoomList(){

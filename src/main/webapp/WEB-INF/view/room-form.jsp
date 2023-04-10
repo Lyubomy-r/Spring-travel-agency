@@ -22,6 +22,7 @@
 
     <form:form action="saveRoom" modelAttribute="room" method="POST">
 
+        <!-- need to associate this data with customer id -->
         <form:hidden path="roomId" />
 
         <table>
@@ -67,7 +68,7 @@
 
 
     <p>
-        <a href="${pageContext.request.contextPath}/api/showeAllHotels">Back to List</a>
+        <a href="${pageContext.request.contextPath}/management/showeAllHotels">Back to List</a>
     </p>
 
 </div>

@@ -6,7 +6,11 @@
 <html>
 
 <head>
-    <title>Table</title>
+    <title>List Customers</title>
+
+    <!-- reference our style sheet -->
+
+
 
 </head>
 
@@ -24,6 +28,8 @@
 
         <h3> HOTEL NAME : ${modelRooms.get(0).hotel.nameHotel}</h3>
 
+        <!--  add our html table here -->
+
         <table>
             <tr>
 
@@ -33,6 +39,10 @@
                 <th>Action</th>
             </tr>
 
+            <!-- loop over and print our customers -->
+            <%--            <form:hidden path="id" >--%>
+            <%--                        <security:authentication property="principal.username"/>--%>
+            <%--            </form:hidden>--%>
             <c:forEach var="tempRoom" items="${modelRooms}">
 
                 <c:url var="updateRoom" value="/management/updateRoom">
@@ -45,6 +55,9 @@
                     <td> ${tempRoom.type} </td>
                     <td> ${tempRoom.price} </td>
                     <td><a href="${updateRoom}">Update</a></td>
+
+
+
 
                 </tr>
 
