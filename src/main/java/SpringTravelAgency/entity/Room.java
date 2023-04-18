@@ -1,7 +1,9 @@
 package SpringTravelAgency.entity;
 
-
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import java.util.List;
 
@@ -14,13 +16,14 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="room_id")
     private Long roomId;
-
+    @NotNull(message ="is required")
     @Column(name="number_room")
     private Integer numberRoom;
-
+    @NotEmpty(message ="is required")
     @Column(name="type")
     private String type;
-
+    @NotNull(message ="is required")
+    @Min(0)
     @Column(name="price")
     private Double price;
 
@@ -30,6 +33,8 @@ public class Room {
 
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "room")
     private List<Order> orderList;
+
+
 
     public void addOrderToRoom(Order theOrder){
         this.orderList.add(theOrder);

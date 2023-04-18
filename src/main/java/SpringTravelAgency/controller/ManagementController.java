@@ -9,11 +9,13 @@ import SpringTravelAgency.service.OrderService;
 import SpringTravelAgency.service.RoomService;
 import SpringTravelAgency.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -26,15 +28,23 @@ public class ManagementController {
     private OrderService orderService;
 
     @Autowired
-    public ManagementController(HotelService hotelService,RoomService roomService, UserService userService, OrderService orderService ){
+    public ManagementController(HotelService hotelService,RoomService roomService,
+                                UserService userService, OrderService orderService ){
         this.hotelService=hotelService;
         this.roomService=roomService;
         this.userService=userService;
         this.orderService=orderService;
 
     }
+    @GetMapping("/managerPage")
+    public String  showManagerPage(Model theModel){
+        List<Hotel> hotelList=hotelService.getHotelList();
+        theModel.addAttribute("hotel",hotelList);
+        return "manager-page";
+    }
 
-    @GetMapping("/showAllHotels")
+
+    @GetMapping("/showeAllHotels")
     public String  showeAllHotels(Model theModel){
         List<Hotel> hotelList=hotelService.getHotelList();
         theModel.addAttribute("hotel",hotelList);
@@ -48,9 +58,16 @@ public class ManagementController {
 
         return "hotel-form";
     }
-    @GetMapping("/updateHotel")
-    @PreAuthorize("hasAuthority('developers:read')")
 
+    @GetMapping("/addddHotel")
+    public String addddHotel(Model theModel){
+        Hotel hotel = new Hotel();
+
+        theModel.addAttribute("hotel",hotel);
+
+        return "fornvalid";
+    }
+    @GetMapping("/updateHotel")
     public String updateHotel(@RequestParam("hotelId")Long hotelId,Model theModel){
         Hotel hotel = hotelService.findHotelById(hotelId);
 
@@ -60,7 +77,11 @@ public class ManagementController {
     }
 
     @PostMapping("/saveHotel")
-    public String saveHotel(@ModelAttribute("hotel") Hotel theHotel ){
+    public String saveHotel(@Valid @ModelAttribute("hotel") Hotel theHotel, BindingResult bindingResult){
+
+        if(bindingResult.hasErrors()){
+            return "hotel-form";
+        }
 
         if(theHotel.getHotelId()==null){
             hotelService.addHotel(theHotel);
@@ -68,8 +89,12 @@ public class ManagementController {
             hotelService.updateHotel(theHotel);
         }
 
-        return "redirect:/management/showAllHotels";
+
+
+//        theModel.addAttribute("customers", hotel);
+        return "redirect:/management/managerPage";
     }
+
 
     @GetMapping("/addRoom")
     public String addRoom(Model theModel){
@@ -90,6 +115,7 @@ public class ManagementController {
             hotel = hotelService.findHotelByName(hotelName);
         }
 
+
         if (theRoom.getRoomId() == null) {
             theRoom.addHotelToRoom(hotel);
             roomService.addRoom(theRoom);
@@ -98,17 +124,18 @@ public class ManagementController {
             roomService.updateRoom(theRoom);
         }
 
-
-        return "redirect:/management/showAllHotels";
+        return "redirect:/management/managerPage";
     }
 
     @PostMapping ("/updateRoom")
-    public String updateRoom(@ModelAttribute("room") Room theRoom) {
+    public String updateRoom(@ModelAttribute("room") Room theRoom, Model theModel) {
         Hotel hotel=hotelService.findHotelByName(theRoom.getHotel().getNameHotel());
         theRoom.addHotelToRoom(hotel);
-        roomService.updateRoom(theRoom);
+            roomService.updateRoom(theRoom);
 
-        return "redirect:/management/showAllHotels";
+        theModel.addAttribute("hotelId",hotel.getHotelId() );
+
+        return "redirect:/management/showHotelRooms";
     }
     @GetMapping("/updateRoom")
     public String updateRoom(@RequestParam("roomId")Long hotelId,Model theModel){
@@ -141,6 +168,24 @@ public class ManagementController {
 
         theModel.addAttribute("orderList", orderList);
         return "order-list";
+    }
+
+    @GetMapping("/deleteUser")
+    public String deleteUser(@RequestParam("userId") Long userId){
+
+        userService.deleteUserById(userId);
+
+        return "redirect:/management/showUsers";
+
+
+    }
+
+    @GetMapping("/userBanned")
+    public String userBanned(@RequestParam("userId") Long userId){
+
+        userService.bannedUser(userId);
+
+        return "redirect:/management/showUsers";
     }
 
 }

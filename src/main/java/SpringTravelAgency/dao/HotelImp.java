@@ -18,6 +18,7 @@ public class HotelImp implements HotelDAO{
     private EntityManager entityManager;
 
 
+
     @Override
     public List<Hotel> getHotelList() {
 
@@ -37,7 +38,7 @@ public class HotelImp implements HotelDAO{
     public Hotel findHotelByName(String hotelName){
 
         Query hotelByName=entityManager.createQuery("SELECT h FROM Hotel h Left JOIN FETCH h.rooms WHERE h.nameHotel=:Name")
-                .setParameter("Name",hotelName).setHint(QueryHints.HINT_READONLY,true);
+                                                            .setParameter("Name",hotelName).setHint(QueryHints.HINT_READONLY,true);
         Hotel hotel= (Hotel) hotelByName.getSingleResult();
         return hotel;
     }

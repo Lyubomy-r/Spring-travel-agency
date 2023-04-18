@@ -14,5 +14,7 @@ public interface UserService {
     public List<User> getUserList();
     public void addUser(User theUser);
     public void updateUser(User theUser);
+
+    public void bannedUser(Long userId);
     public void deleteUserById(Long theUser);
 }

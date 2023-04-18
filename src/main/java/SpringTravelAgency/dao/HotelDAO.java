@@ -1,4 +1,5 @@
 package SpringTravelAgency.dao;
+
 import SpringTravelAgency.entity.Hotel;
 
 import java.util.List;

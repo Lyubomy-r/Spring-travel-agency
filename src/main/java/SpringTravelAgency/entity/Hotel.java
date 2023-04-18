@@ -1,5 +1,9 @@
 package SpringTravelAgency.entity;
+
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 import java.util.List;
 
@@ -11,15 +15,19 @@ public class Hotel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="hotel_id")
     private Long hotelId;
-
+    @NotEmpty(message ="is required")
+    @Pattern(regexp="^[a-zA-Z]{3,50}",message="Write a correct Hotel Name. Use only chars.")
     @Column(name="name_hotel")
     private String nameHotel;
 
+
     @Column(name="description")
+    @NotEmpty(message ="is required")
     private String description;
+    @NotEmpty(message ="is required")
     @Column(name="country")
     private String country;
-
+    @NotEmpty(message ="is required")
     @Column(name="city")
     private String city;
 

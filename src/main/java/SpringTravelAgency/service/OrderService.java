@@ -13,5 +13,5 @@ public interface OrderService {
     public List<Order> getAllUserOrders(Long userId);
     public void addOrder(Order theOrder);
     public void updateOrder(Order theOrder);
-    public void deleteOrderById(Long theOrder);
+    public void deleteOrder(Long roomId, LocalDate arrive, LocalDate departure);
 }

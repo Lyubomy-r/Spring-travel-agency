@@ -2,6 +2,7 @@ package SpringTravelAgency.controller;
 
 
 import SpringTravelAgency.entity.Hotel;
+import SpringTravelAgency.entity.User;
 import SpringTravelAgency.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,15 @@ public class HomePage {
         theModel.addAttribute("countryList",countryList);
         return "index";
     }
+
+
+
+    @GetMapping("/homepage")
+    public String homepage(){
+
+        return "home-page";
+    }
+
 
 
 

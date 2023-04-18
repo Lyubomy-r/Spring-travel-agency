@@ -45,6 +45,10 @@ public class UserServiceImp implements UserService {
         userDAO.updateUser(theUser);
     }
     @Override
+    public void bannedUser(Long userId){
+        userDAO.bannedUser(userId);
+    }
+    @Override
     public void deleteUserById(Long theUser){
         userDAO.deleteUserById(theUser);
     }

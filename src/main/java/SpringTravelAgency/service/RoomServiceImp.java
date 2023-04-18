@@ -1,6 +1,5 @@
 package SpringTravelAgency.service;
 
-
 import SpringTravelAgency.dao.RoomDAO;
 import SpringTravelAgency.entity.Room;
 import org.springframework.beans.factory.annotation.Autowired;

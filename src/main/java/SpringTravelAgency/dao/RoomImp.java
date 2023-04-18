@@ -4,6 +4,7 @@ package SpringTravelAgency.dao;
 import SpringTravelAgency.entity.Room;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -60,7 +61,7 @@ public class RoomImp implements RoomDAO {
 
     @Override
     public List<Room> freeRoomListByName(String theCountry, LocalDate arrivalDate,
-                                         LocalDate departureDate){
+                                   LocalDate departureDate){
 
         Query queryGetDateArrive=entityManager.createQuery("SELECT r FROM Room r where r.hotel.nameHotel=:theCountry " +
                 "and r.roomId not in (" +

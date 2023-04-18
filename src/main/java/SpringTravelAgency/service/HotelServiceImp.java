@@ -25,7 +25,7 @@ public class HotelServiceImp implements HotelService {
     }
     @Override
     public List<Hotel> getHotelList(){
-        return  hotelDAO.getHotelList();
+      return  hotelDAO.getHotelList();
     }
 
     @Override

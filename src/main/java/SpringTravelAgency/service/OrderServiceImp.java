@@ -43,8 +43,13 @@ public class OrderServiceImp implements OrderService {
         orderService.updateOrder(theOrder);
     }
     @Override
-    public void deleteOrderById(Long theOrder){
-        orderService.deleteOrderById(theOrder);
+    public void deleteOrder(Long roomId, LocalDate arrive, LocalDate departure){
+        orderService.deleteOrder(roomId, arrive, departure);
     }
+
+
+
+
+
 
 }

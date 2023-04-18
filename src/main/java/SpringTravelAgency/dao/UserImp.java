@@ -1,7 +1,10 @@
 package SpringTravelAgency.dao;
+
 import SpringTravelAgency.entity.User;
+import SpringTravelAgency.entity.enumpack.Status;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.stereotype.Repository;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -34,7 +37,8 @@ public class UserImp implements UserDAO {
     @Override
     public List<User> getUserList(){
 
-        Query queryGetUsers=entityManager.createQuery("SELECT r FROM User r").setHint(QueryHints.HINT_READONLY,true);
+        Query queryGetUsers=entityManager.createQuery("SELECT r FROM User r WHERE r.role='USER'")
+                .setHint(QueryHints.HINT_READONLY,true);
         List<User> allUsers= queryGetUsers.getResultList();
 
         return allUsers;
@@ -52,7 +56,8 @@ public class UserImp implements UserDAO {
 
     @Override
     public User getUserAllConnectionsByName(String nameUser) {
-        Query query = entityManager.createQuery("SELECT DISTINCT u FROM User u LEFT join fetch u.orderList  WHERE u.firstName=:nameUser")
+        Query query = entityManager.createQuery("SELECT DISTINCT u FROM User u LEFT join fetch u.orderList  " +
+                        "WHERE u.firstName=:nameUser")
                 .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false ).setHint(QueryHints.HINT_READONLY,true);
         query.setParameter("nameUser", nameUser);
         User finUser= (User) query.getSingleResult();
@@ -68,6 +73,15 @@ public class UserImp implements UserDAO {
     @Override
     public void updateUser(User theUser){
         entityManager.merge(theUser);
+    }
+
+    @Override
+    public void bannedUser(Long userId){
+
+        User user =entityManager.find(User.class, userId);
+        user.setStatus(Status.BANNED);
+        entityManager.merge(user);
+
     }
     @Override
     public void deleteUserById(Long theUser){

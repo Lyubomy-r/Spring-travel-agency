@@ -1,0 +1,62 @@
+/* Reset some default styles */
+body, h1, h2, h3, p {
+	margin: 0;
+	padding: 0;
+}
+
+/* Basic styles for the body */
+body {
+	font-family: Arial, sans-serif;
+	line-height: 1.6;
+}
+
+/* Header styles */
+header {
+	background-color: #333;
+	color: #fff;
+	padding: 20px;
+}
+
+/* Hero section styles */
+#hero-section {
+	background-image: url(hero.jpg);
+	background-size: cover;
+	background-position: center;
+	color: #fff;
+	padding: 100px;
+	text-align: center;
+}
+
+/* Search section styles */
+#search-section {
+	background-color: #f7f7f7;
+	padding: 50px;
+	text-align: center;
+}
+
+/* Featured section styles */
+#featured-section {
+	padding: 50px;
+	text-align: center;
+}
+
+/* Testimonial section styles */
+#testimonial-section {
+	background-color: #f7f7f7;
+	padding: 50px;
+	text-align: center;
+}
+
+/* Newsletter section styles */
+#newsletter-section {
+	padding: 50px;
+	text-align: center;
+}
+
+/* Footer section styles */
+#footer-section {
+	background-color: #333;
+	color: #fff;
+	padding: 20px;
+	text-align: center;
+}
