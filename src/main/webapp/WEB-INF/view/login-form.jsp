@@ -10,6 +10,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Reference Bootstrap files -->
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -21,30 +27,19 @@
 </head>
 
 <body>
+<section class="vh-100 bg-image"
 
-<div>
+>
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;">
+                        <div class="card-body p-5">
+                            <h2 class="text-uppercase text-center mb-5">Login</h2>
 
-    <div id="loginbox" style="margin-top: 50px;"
-         class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
-
-        <div class="panel panel-info">
-
-            <div class="panel-heading">
-                <div class="panel-title">Sign In</div>
-            </div>
-
-            <div style="padding-top: 30px" class="panel-body">
-
-                <!-- Login Form -->
-                <form:form action="${pageContext.request.contextPath}/authenticateTheUser"
-                           method="POST" class="form-horizontal">
-
-                    <!-- Place for messages: error, alert etc ... -->
-                    <div class="form-group">
-                        <div class="col-xs-15">
-                            <div>
-
-                                <!-- Check for login error -->
+                            <form:form action="${pageContext.request.contextPath}/authenticateTheUser"
+                                       method="POST">
 
                                 <c:if test="${param.error != null}">
 
@@ -62,40 +57,34 @@
 
                                 </c:if>
 
-                            </div>
+                                <div class="form-outline mb-4">
+                                    <input  name="username" type="email" id="form3Example3cg" class="form-control form-control-lg" />
+                                    <label class="form-label" for="form3Example3cg">Your Email</label>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input name="password" type="password" id="form3Example4cg" class="form-control form-control-lg" />
+                                    <label class="form-label" for="form3Example4cg">Password</label>
+                                </div>
+
+
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit"
+                                            class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Login</button>
+                                </div>
+
+                                <p class="text-center text-muted mt-5 mb-0">Back to home page <a href="${pageContext.request.contextPath}/"
+                                                                                                        class="fw-bold text-body"><u>Return back</u></a></p>
+
+                            </form:form>
+
                         </div>
                     </div>
-
-                    <!-- User name -->
-                    <div style="margin-bottom: 25px" class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-
-                        <input type="text" name="username" placeholder="username" class="form-control">
-                    </div>
-
-                    <!-- Password -->
-                    <div style="margin-bottom: 25px" class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-
-                        <input type="password" name="password" placeholder="password" class="form-control" >
-                    </div>
-
-                    <!-- Login/Submit Button -->
-                    <div style="margin-top: 10px" class="form-group">
-                        <div class="col-sm-6 controls">
-                            <button type="submit" class="btn btn-success">Login</button>
-                        </div>
-                    </div>
-
-                </form:form>
-
+                </div>
             </div>
-
         </div>
-
     </div>
-
-</div>
+</section>
 
 </body>
 </html>

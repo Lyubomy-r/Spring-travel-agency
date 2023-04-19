@@ -43,13 +43,21 @@ public class ManagementController {
         return "manager-page";
     }
 
+<<<<<<< HEAD
 
     @GetMapping("/showeAllHotels")
+=======
+<<<<<<< HEAD
+    @GetMapping("/showAllHotels")
+>>>>>>> 9201a91 (added new jsp files, new view pages Manage, Home page, Login, Registration form, form add new room and hotel)
     public String  showeAllHotels(Model theModel){
         List<Hotel> hotelList=hotelService.getHotelList();
         theModel.addAttribute("hotel",hotelList);
         return "hotel-list";
     }
+=======
+
+>>>>>>> 35a4fdb ( added new jsp files, new view pages Manage, Home page , Login, Registration form, form add new room and hotel)
     @GetMapping("/addHotel")
     public String addHotel(Model theModel){
         Hotel hotel = new Hotel();
@@ -58,6 +66,16 @@ public class ManagementController {
 
         return "hotel-form";
     }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 35a4fdb ( added new jsp files, new view pages Manage, Home page , Login, Registration form, form add new room and hotel)
+    @GetMapping("/updateHotel")
+    @PreAuthorize("hasAuthority('developers:read')")
+>>>>>>> 9201a91 (added new jsp files, new view pages Manage, Home page, Login, Registration form, form add new room and hotel)
 
     @GetMapping("/addddHotel")
     public String addddHotel(Model theModel){
@@ -77,22 +95,58 @@ public class ManagementController {
     }
 
     @PostMapping("/saveHotel")
+<<<<<<< HEAD
     public String saveHotel(@Valid @ModelAttribute("hotel") Hotel theHotel, BindingResult bindingResult){
+=======
+<<<<<<< HEAD
+    public String saveHotel(@ModelAttribute("hotel") Hotel theHotel ){
+=======
+    public String saveHotel(@Valid @ModelAttribute("hotel") Hotel theHotel,
+                            BindingResult bindingResult) throws Exception {
+>>>>>>> 9201a91 (added new jsp files, new view pages Manage, Home page, Login, Registration form, form add new room and hotel)
 
         if(bindingResult.hasErrors()){
             return "hotel-form";
         }
+<<<<<<< HEAD
+=======
+>>>>>>> 35a4fdb ( added new jsp files, new view pages Manage, Home page , Login, Registration form, form add new room and hotel)
+>>>>>>> 9201a91 (added new jsp files, new view pages Manage, Home page, Login, Registration form, form add new room and hotel)
 
         if(theHotel.getHotelId()==null){
-            hotelService.addHotel(theHotel);
-        }else{
+            List<Hotel> userList=hotelService.getHotelList();
+            Boolean emailExist = userList.stream().anyMatch(user->user.getNameHotel().equals(theHotel.getNameHotel()));
+            if(emailExist){
+                throw new Exception(
+                        "There is an hotel with that name :" + theHotel.getNameHotel());
+//
+            }else {
+                hotelService.addHotel(theHotel);
+            }
+        }else {
             hotelService.updateHotel(theHotel);
         }
 
+<<<<<<< HEAD
 
 
 //        theModel.addAttribute("customers", hotel);
         return "redirect:/management/managerPage";
+=======
+<<<<<<< HEAD
+        return "redirect:/management/showAllHotels";
+=======
+        return "redirect:/management/managerPage";
+    }
+    @GetMapping("/deleteHotel")
+    public String deleteHotel(@RequestParam("hotelId") Long hotelId){
+
+        hotelService.deleteHotelById(hotelId);
+
+
+        return "redirect:/management/managerPage";
+>>>>>>> 35a4fdb ( added new jsp files, new view pages Manage, Home page , Login, Registration form, form add new room and hotel)
+>>>>>>> 9201a91 (added new jsp files, new view pages Manage, Home page, Login, Registration form, form add new room and hotel)
     }
 
 
@@ -106,7 +160,8 @@ public class ManagementController {
     }
 
     @PostMapping ("/saveRoom")
-    public String saveRoom(@RequestParam("hotelName")String hotelName, @ModelAttribute("room") Room theRoom) {
+    public String saveRoom(@RequestParam("hotelName")String hotelName,
+                           @ModelAttribute("room") Room theRoom) throws Exception {
 
         Hotel hotel;
         if (hotelName.isEmpty()) {
@@ -115,7 +170,20 @@ public class ManagementController {
             hotel = hotelService.findHotelByName(hotelName);
         }
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+        List<Room> roomList=roomService.findRoomListByHotelId(theRoom.getHotel().getHotelId());
+        Boolean roomExist = roomList.stream().anyMatch(room->room.getNumberRoom().equals(theRoom.getNumberRoom()));
+        if(roomExist){
+            throw new Exception(
+                    "There is an room with that room number :" + theRoom.getNumberRoom());
+        }
+
+>>>>>>> 35a4fdb ( added new jsp files, new view pages Manage, Home page , Login, Registration form, form add new room and hotel)
+>>>>>>> 9201a91 (added new jsp files, new view pages Manage, Home page, Login, Registration form, form add new room and hotel)
         if (theRoom.getRoomId() == null) {
             theRoom.addHotelToRoom(hotel);
             roomService.addRoom(theRoom);
@@ -154,6 +222,16 @@ public class ManagementController {
 
         return "hotel-rooms";
     }
+
+    @GetMapping("/deleteRoom")
+    public String deleteRoom(@RequestParam("roomId") Long roomId,Model theModel){
+        Room room= roomService.getRoomAllConnections(roomId);
+        roomService.deleteRoomById(roomId);
+
+        theModel.addAttribute("hotelId",  room.getHotel().getHotelId());
+        return "redirect:/management/showHotelRooms";
+    }
+
     @GetMapping("/showUsers")
     public String showUsers(Model theModel){
         List<User> userList= userService.getUserList();
@@ -170,9 +248,18 @@ public class ManagementController {
         return "order-list";
     }
 
+<<<<<<< HEAD
     @GetMapping("/deleteUser")
     public String deleteUser(@RequestParam("userId") Long userId){
 
+=======
+<<<<<<< HEAD
+=======
+    @GetMapping("/deleteUser")
+    public String deleteUser(@RequestParam("userId") Long userId){
+
+
+>>>>>>> 9201a91 (added new jsp files, new view pages Manage, Home page, Login, Registration form, form add new room and hotel)
         userService.deleteUserById(userId);
 
         return "redirect:/management/showUsers";
@@ -188,4 +275,8 @@ public class ManagementController {
         return "redirect:/management/showUsers";
     }
 
+<<<<<<< HEAD
+=======
+>>>>>>> 35a4fdb ( added new jsp files, new view pages Manage, Home page , Login, Registration form, form add new room and hotel)
+>>>>>>> 9201a91 (added new jsp files, new view pages Manage, Home page, Login, Registration form, form add new room and hotel)
 }
