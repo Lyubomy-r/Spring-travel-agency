@@ -2,7 +2,7 @@ package SpringTravelAgency.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class DispatcherServletInitializer  extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return null;
@@ -14,5 +14,7 @@ public class DispatcherServletInitializer  extends AbstractAnnotationConfigDispa
     }
 
     @Override
-    protected String[] getServletMappings() {return new String[]{"/"};}
+    protected String[] getServletMappings() {
+        return new String[]{"/"};
+    }
 }

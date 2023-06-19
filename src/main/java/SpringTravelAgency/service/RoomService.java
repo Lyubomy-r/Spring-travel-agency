@@ -1,23 +1,33 @@
 package SpringTravelAgency.service;
 
 import SpringTravelAgency.entity.Room;
-
 import java.time.LocalDate;
 import java.util.List;
 
 public interface RoomService {
-    public Room getRoomAllConnections(Long theId);
-    public List<Room> getRoomListAllConnections();
-    public Room findRoomById(Long theId);
-    public Room findRoomByHotelName(String hotelName);
-    public List<Room> freeRoomList(Long theCountry, LocalDate arrivalDate,
-                                   LocalDate departureDate);
-    public List<Room> freeRoomListByName(String theCountry, LocalDate arrivalDate,
-                                         LocalDate departureDate);
-    public List<Room> findRoomListByHotelId(Long hotelId);
-    public List<Room> getRoomList();
-    public void addRoom(Room theRoom);
-    public void updateRoom(Room theRoom);
+    Room getRoomAllConnections(Long theId);
 
-    public void deleteRoomById(Long theRoom);
+    List<Room> getRoomListAllConnections();
+
+    Room findRoomById(Long theId);
+
+    Room findRoomByHotelName(String hotelName);
+
+    List<Room> freeRoomList(Long theCountry, LocalDate arrivalDate,
+                            LocalDate departureDate);
+
+    List<Room> freeRoomListByName(String theCountry, LocalDate arrivalDate,
+                                  LocalDate departureDate);
+
+    List<Room> findRoomListByHotelId(Long hotelId);
+
+    List<Room> getRoomList();
+
+    Boolean roomExist( List<Room> roomList, Room theRoom);
+
+    void addRoom(Room theRoom);
+
+    void updateRoom(Room theRoom);
+
+    void deleteRoomById(Long theRoom);
 }

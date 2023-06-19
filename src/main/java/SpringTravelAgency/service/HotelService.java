@@ -1,17 +1,26 @@
 package SpringTravelAgency.service;
 
 import SpringTravelAgency.entity.Hotel;
-
 import java.util.List;
+import java.util.Set;
 
 public interface HotelService {
 
-    public Hotel getHotelAllConnections(Long theId);
-    public List<Hotel> getHotelList();
-    public Hotel findHotelById(Long theId);
-    public Hotel findHotelByName(String hotelName);
-    public List<Hotel> findHotelByCountry(String country);
-    public void addHotel(Hotel theHotel);
-    public void updateHotel(Hotel theHotel);
-    public void deleteHotelById(Long theHotel);
+    Hotel getHotelAllConnections(Long theId);
+
+    List<Hotel> getHotelList();
+
+    Set<String> getCountryList();
+
+    Hotel findHotelById(Long theId);
+
+    Hotel findHotelByName(String hotelName);
+
+    List<Hotel> findHotelByCountry(String country);
+
+    void addHotel(Hotel theHotel);
+
+    void updateHotel(Hotel theHotel);
+
+    void deleteHotelById(Long theHotel);
 }

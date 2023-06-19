@@ -1,20 +1,29 @@
 package SpringTravelAgency.service;
 
+import SpringTravelAgency.entity.Room;
 import SpringTravelAgency.entity.User;
 
 import java.util.List;
 
 public interface UserService {
 
-    public User getUserAllConnectionsById(Long theId);
+    User getUserAllConnectionsById(Long theId);
 
-    public User getUserAllConnectionsByName(String nameUred);
-    public User findUserById(Long theId);
-    public User getUserByEmail(String userEmail);
-    public List<User> getUserList();
-    public void addUser(User theUser);
-    public void updateUser(User theUser);
+    User getUserAllConnectionsByName(String nameUred);
 
-    public void bannedUser(Long userId);
-    public void deleteUserById(Long theUser);
+    User findUserById(Long theId);
+
+    User getUserByEmail(String userEmail);
+
+    List<User> getUserList();
+
+    Boolean emailExist(List<User> userList, User theUser);
+
+    void addUser(User theUser);
+
+    void updateUser(User theUser);
+
+    void bannedUser(Long userId);
+
+    void deleteUserById(Long theUser);
 }

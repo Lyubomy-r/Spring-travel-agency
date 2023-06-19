@@ -15,17 +15,15 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
-import java.util.Properties;
 
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages="SpringTravelAgency")
-@PropertySource({ "classpath:persistence.properties" })
-public class AppConfig  implements WebMvcConfigurer {
+@ComponentScan(basePackages = "SpringTravelAgency")
+@PropertySource({"classpath:persistence.properties"})
+public class AppConfig implements WebMvcConfigurer {
 
     @Value("${jdbc.driver}")
     private String driverClassName;
@@ -36,15 +34,15 @@ public class AppConfig  implements WebMvcConfigurer {
     @Value("${jdbc.url}")
     private String url;
 
+    private final Environment env;
 
     @Autowired
-    private Environment env;
-
-    public AppConfig() {
+    public AppConfig(Environment env) {
+        this.env = env;
     }
 
     @Bean
-    public ViewResolver viewResolver(){
+    public ViewResolver viewResolver() {
 
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 
@@ -57,8 +55,8 @@ public class AppConfig  implements WebMvcConfigurer {
     @Bean
     @Profile("dev")
     @Primary
-    public DataSource dataSource(){
-        DriverManagerDataSource dataSource =new DriverManagerDataSource();
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(driverClassName);
         dataSource.setUsername(user);
         dataSource.setPassword(password);
@@ -66,7 +64,6 @@ public class AppConfig  implements WebMvcConfigurer {
 
         return dataSource;
     }
-
 
     @Bean
     @Profile("prod")
@@ -78,8 +75,7 @@ public class AppConfig  implements WebMvcConfigurer {
         // set the jdbc driver
         try {
             myDataSource.setDriverClass(env.getProperty("jdbc.driver"));
-        }
-        catch (PropertyVetoException exc) {
+        } catch (PropertyVetoException exc) {
             throw new RuntimeException(exc);
         }
 
@@ -97,8 +93,6 @@ public class AppConfig  implements WebMvcConfigurer {
         return myDataSource;
     }
 
-
-
     private int getIntProperty(String propName) {
 
         String propVal = env.getProperty(propName);
@@ -109,13 +103,9 @@ public class AppConfig  implements WebMvcConfigurer {
         return intPropVal;
     }
 
-
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry
-                .addResourceHandler("/resources/**")
-                .addResourceLocations("/resources/");
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
     @Bean
@@ -130,7 +120,7 @@ public class AppConfig  implements WebMvcConfigurer {
     }
 
     @Bean("entityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean localContainerEMF(DataSource myDataSource, JpaVendorAdapter jpaVendorAdapter  ) {
+    public LocalContainerEntityManagerFactoryBean localContainerEMF(DataSource myDataSource, JpaVendorAdapter jpaVendorAdapter) {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(myDataSource);
         emf.setJpaVendorAdapter(jpaVendorAdapter);
@@ -138,6 +128,4 @@ public class AppConfig  implements WebMvcConfigurer {
 
         return emf;
     }
-
-
 }

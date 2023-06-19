@@ -1,7 +1,6 @@
 package SpringTravelAgency.config;
 
 import SpringTravelAgency.entity.enumpack.Permission;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import SpringTravelAgency.security.UserDetailsServiceImp;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -26,9 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsServiceImp userDetailsServiceImp;
 
     @Autowired
-    SecurityConfig(@Qualifier("userDetailsServiceImp") UserDetailsServiceImp userDetailsServiceImp){
+    SecurityConfig(@Qualifier("userDetailsServiceImp") UserDetailsServiceImp userDetailsServiceImp) {
 
-        this.userDetailsServiceImp=userDetailsServiceImp;
+        this.userDetailsServiceImp = userDetailsServiceImp;
     }
 
     @Override
@@ -48,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/showMyLoginPage").loginProcessingUrl("/authenticateTheUser").permitAll()
                 .and()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout","POST"))
+                .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout", "POST"))
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
@@ -57,16 +55,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    protected  PasswordEncoder passwordEncoder() {
+    protected PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
     }
+
     @Bean
-    protected DaoAuthenticationProvider daoAuthenticationProvider(){
+    protected DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImp);
         return daoAuthenticationProvider;
     }
-
-
 }
